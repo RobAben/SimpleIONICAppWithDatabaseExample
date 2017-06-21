@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Songs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h1> List of all songs </h1>
+  <!-- The table grid -->
+  <ion-grid>
+    <!-- Header -->
+    <ion-row class="header">
+      <ion-col col-3>Name</ion-col>
+      <ion-col col-3>Artist</ion-col>
+      <ion-col col-2>Duration</ion-col>
+      <ion-col col-2>Date</ion-col>
+      <ion-col col-1></ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <!-- Repeated data -->
+    <ion-row>
+      <ion-col col-3>One</ion-col>
+      <ion-col col-3>Metallica</ion-col>
+      <ion-col col-2>7:34</ion-col>
+      <ion-col col-2>12-09-1992</ion-col>
+      <ion-col col-1>
+        <ion-icon color="danger" name="backspace"></ion-icon>
+      </ion-col>
+      <ion-col col-1>
+        <ion-icon name="cog"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <button ion-button color="secondary" icon-left>
+    <ion-icon name="add"></ion-icon>
+    New song
+  </button>
+</ion-content>
