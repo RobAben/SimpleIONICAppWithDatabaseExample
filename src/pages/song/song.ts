@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SongProviderInterface } from '../../providers/interfaces/song-provider-interface';
 import { Song } from '../../models/song';
 import { Artist } from '../../models/artist';
+import { SongProvider } from '../../providers/sqlite/song-provider';
 
 /**
  * Generated class for the SongPage page.
@@ -16,13 +17,14 @@ import { Artist } from '../../models/artist';
   templateUrl: 'song.html',
 })
 export class SongPage {
-  // To communicate with our songs provider
-  private songProvider: SongProviderInterface;
-
   // The current song should start empty
-  public song: Song = new Song(null, '', new Date().toISOString(), 0, new Artist(null,''));
+  public song;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private songProvider: SongProvider) {
+    this.clearForm();
+  }
 
   ionViewDidLoad() {
     // Retrieve the object from navParams if present
@@ -35,30 +37,28 @@ export class SongPage {
       this.song.id === null ? this.addSong(this.song) : this.updateSong(this.song);
   }
 
+  private clearForm(){
+    this.song = new Song(null, '', new Date().toISOString(), 0, new Artist(null,''));
+  }
+
   private addSong(song: Song) {
-    this.songProvider.addSong(song).subscribe((song: Song) => {
+    this.songProvider.addSong(song).then((song: Song) => {
       // Empty the inputs and send update
       this.songProvider.songUpdated.next(this.song);
-      this.song = null;
-    }, (error) => {
-      // on error
-      console.log('Error occured adding song: ' + error);
-    }, () => {
-      console.log('request finished');
-    });
+      this.clearForm();
+    }).catch((e) => {
+        console.log(JSON.stringify(e))
+    })
   }
 
   private updateSong(song: Song) {
-    this.songProvider.updateSong(song).subscribe((song: Song) => {
+    this.songProvider.updateSong(song).then((song: Song) => {
       // Empty the inputs and send update
       this.songProvider.songUpdated.next(this.song);
-      this.song = null;
-    }, (error) => {
-      // on error
-      console.log('Error occured updating song: ' + error);
-    }, () => {
-      console.log('request finished');
-    });
+      this.clearForm();
+    }).catch((e) => {
+      console.log(JSON.stringify(e))
+    })
   }
 
 }
