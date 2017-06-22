@@ -1,0 +1,43 @@
+<!--
+  Generated template for the SongPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add a song</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="saveSong()">
+    <ion-item>
+      <ion-label fixed>Name</ion-label>
+      <ion-input type="text" [(ngModel)]="song.name" name="name" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Artist</ion-label>
+      <ion-input type="text" [(ngModel)]="song.artist.name" name="artist" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Duration</ion-label>
+      <ion-input type="number" [(ngModel)]="song.duration" name="duration" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Release date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="song.releaseDate" name="releaseDate"
+                    required></ion-datetime>
+    </ion-item>
+  </form>
+
+  <button ion-button color="secondary" icon-left>
+    <ion-icon name="save"></ion-icon>
+    Save song
+  </button>
+</ion-content>

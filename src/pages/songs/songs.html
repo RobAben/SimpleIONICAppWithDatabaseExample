@@ -18,20 +18,20 @@
       <ion-col col-1></ion-col>
     </ion-row>
     <!-- Repeated data -->
-    <ion-row>
-      <ion-col col-3>One</ion-col>
-      <ion-col col-3>Metallica</ion-col>
-      <ion-col col-2>7:34</ion-col>
-      <ion-col col-2>12-09-1992</ion-col>
+    <ion-row *ngFor="let song of songs">
+      <ion-col col-3>{{song.name}}</ion-col>
+      <ion-col col-3>{{song.artist.name}}</ion-col>
+      <ion-col col-2>{{song.duration}}</ion-col>
+      <ion-col col-2>{{song.releaseDate}}</ion-col>
       <ion-col col-1>
-        <ion-icon color="danger" name="backspace"></ion-icon>
+        <ion-icon color="danger" name="backspace" (click)="removeSong(song.id)"></ion-icon>
       </ion-col>
       <ion-col col-1>
-        <ion-icon name="cog"></ion-icon>
+        <ion-icon name="cog" (click)="goToUpdateSongPage(song)"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <button ion-button color="secondary" icon-left>
+  <button ion-button color="secondary" icon-left (click)="goToAddSongPage()">
     <ion-icon name="add"></ion-icon>
     New song
   </button>

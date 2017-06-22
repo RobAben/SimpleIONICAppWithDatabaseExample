@@ -1,0 +1,41 @@
+<!--
+  Generated template for the ArtistsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Artists</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1> List of all Artists </h1>
+  <!-- The table grid -->
+  <ion-grid>
+    <!-- Header -->
+    <ion-row class="header">
+      <ion-col col-10>Name</ion-col>
+      <ion-col col-1></ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <!-- Repeated data -->
+    <ion-row *ngFor="let artist of artists">
+      <ion-col col-10>{{artist.name}}</ion-col>
+      <ion-col col-1>
+        <ion-icon color="danger" name="backspace" (click)="removeArtist(artist.id)"></ion-icon>
+      </ion-col>
+      <ion-col col-1>
+        <ion-icon name="cog" (click)="goToUpdateArtistPage(artist)"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <button ion-button color="secondary" icon-left (click)="goToAddArtistPage()">
+    <ion-icon name="add"></ion-icon>
+    New Artist
+  </button>
+</ion-content>

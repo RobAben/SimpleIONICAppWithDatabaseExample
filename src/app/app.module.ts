@@ -9,12 +9,16 @@ import { ArtistsPage } from '../pages/artists/artists';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { ArtistPage } from "../pages/artist/artist";
+import { SongPage } from '../pages/song/song';
 
 @NgModule({
   declarations: [
     MyApp,
     SongsPage,
     ArtistsPage,
+    SongPage,
+    ArtistPage,
     TabsPage
   ],
   imports: [
@@ -26,6 +30,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     SongsPage,
     ArtistsPage,
+    SongPage,
+    ArtistPage,
     TabsPage
   ],
   providers: [
