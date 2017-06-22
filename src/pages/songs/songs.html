@@ -23,11 +23,11 @@
       <ion-col col-3>{{song.artist.name}}</ion-col>
       <ion-col col-2>{{song.duration}}</ion-col>
       <ion-col col-2>{{song.releaseDate}}</ion-col>
-      <ion-col col-1>
-        <ion-icon color="danger" name="backspace" (click)="removeSong(song.id)"></ion-icon>
+      <ion-col col-1 (click)="removeSong(song.id)">
+        <ion-icon color="danger" name="backspace"></ion-icon>
       </ion-col>
-      <ion-col col-1>
-        <ion-icon name="cog" (click)="goToUpdateSongPage(song)"></ion-icon>
+      <ion-col col-1 (click)="goToUpdateSongPage(song)">
+        <ion-icon name="cog"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>

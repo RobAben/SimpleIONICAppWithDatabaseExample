@@ -11,6 +11,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ArtistPage } from "../pages/artist/artist";
 import { SongPage } from '../pages/song/song';
+import { SQLite } from '@ionic-native/sqlite';
+import { Database } from '../providers/sqlite/database-setup';
+import { SongProvider } from "../providers/sqlite/song-provider";
+import { ArtistProvider } from "../providers/sqlite/artist-provider";
 
 @NgModule({
   declarations: [
@@ -37,6 +41,10 @@ import { SongPage } from '../pages/song/song';
   providers: [
     StatusBar,
     SplashScreen,
+    SQLite,
+    SongProvider,
+    Database,
+    ArtistProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
