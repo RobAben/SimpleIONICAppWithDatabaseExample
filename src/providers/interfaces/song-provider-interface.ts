@@ -4,9 +4,9 @@ import { Subject } from 'rxjs/Subject';
 
 export interface SongProviderInterface {
   songUpdated: Subject<Song>;
-  getSong(id: number): Observable<Song>;
-  getAllSongs(): Observable<Song[]>;
-  updateSong(song: Song): Observable<Song>;
-  removeSong(id: number): Observable<boolean>;
-  addSong(song: Song): Observable<Song>;
+  getSong(id: number): Promise<Song>;
+  getAllSongs(): Promise<Song[]>;
+  updateSong(song: Song): Promise<Song>;
+  removeSong(song: Song): Promise<boolean>;
+  addSong(song: Song): Promise<Song>;
 }
