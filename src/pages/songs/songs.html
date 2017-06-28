@@ -18,7 +18,7 @@
       <ion-col col-1></ion-col>
     </ion-row>
     <!-- Repeated data -->
-    <ion-row *ngFor="let song of songs">
+    <ion-row *ngFor="let song of songs | async">
       <ion-col col-3>{{song.name}}</ion-col>
       <ion-col col-3>{{song.artist.name}}</ion-col>
       <ion-col col-2>{{song.duration}}</ion-col>

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Artist } from '../../models/artist';
-import { ArtistProviderInterface } from '../../providers/interfaces/artist-provider-interface';
-import { ArtistProvider } from '../../providers/sqlite/artist-provider';
+import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 
 @IonicPage()
 @Component({
@@ -10,46 +9,38 @@ import { ArtistProvider } from '../../providers/sqlite/artist-provider';
   templateUrl: 'artist.html',
 })
 export class ArtistPage {
-  public artist: Artist;
+  public artist;
+  public artists: FirebaseListObservable<any[]>;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private artistProvider: ArtistProvider) {
+              public db: AngularFireDatabase) {
     this.clearForm();
   }
 
   ionViewDidLoad() {
+    let artistId;
     // Retrieve the object from navParams if present
     if ( this.navParams.get('artist') != null){
-      this.artist = this.navParams.get('artist');
+      artistId = this.navParams.get('artist').id;
+      this.artists = this.db.list('/artists');
+      this.artist = this.artists.$ref.orderByChild('id').equalTo(artistId);
     }
   }
 
-  public saveArtist() {
-    this.artist.id === null ? this.addArtist(this.artist) : this.updateArtist(this.artist);
+  public saveArtist(key: string) {
+    this.artist.id === null ? this.addArtist(this.artist) : this.updateArtist(key, this.artist);
   }
 
   private clearForm(){
     this.artist = new Artist(null, '');
   }
 
-  private addArtist(artist: Artist) {
-    this.artistProvider.addArtist(artist).then((artist: Artist) => {
-      // Empty the inputs and send update
-      this.artistProvider.artistUpdated.next(artist);
-      this.clearForm();
-    }).catch((error) => {
-      console.log('Error occured adding artist: ' + JSON.stringify(error));
-    });
+  addArtist(artist: Artist) {
+    return this.artists.push(artist);
   }
 
-  private updateArtist(artist: Artist) {
-    this.artistProvider.updateArtist(artist).then((artist: Artist) => {
-      // Empty the inputs and send update
-      this.artistProvider.artistUpdated.next(artist);
-      this.clearForm();
-    }).catch((error) => {
-      console.log('Error occured updating artist: ' + JSON.stringify(error));
-    });
+  updateArtist(key: string, artist: Artist) {
+    return this.artists.update(key,artist);
   }
 }

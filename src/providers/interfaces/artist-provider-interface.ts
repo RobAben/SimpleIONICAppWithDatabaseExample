@@ -5,7 +5,7 @@ export interface ArtistProviderInterface {
     artistUpdated: Subject<Artist>;
     getArtist(id: number);
     getAllArtists();
-    updateArtist(artist: Artist);
-    removeArtist(id: number);
+    updateArtist(key: string, artist: Artist);
+    removeArtist(key: string);
     addArtist(artist: Artist);
 }

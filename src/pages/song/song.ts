@@ -1,64 +1,47 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { SongProviderInterface } from '../../providers/interfaces/song-provider-interface';
 import { Song } from '../../models/song';
+import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { Artist } from '../../models/artist';
-import { SongProvider } from '../../providers/sqlite/song-provider';
 
-/**
- * Generated class for the SongPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
-  selector: 'page-song',
-  templateUrl: 'song.html',
-})
+             selector: 'page-song',
+             templateUrl: 'song.html',
+           })
 export class SongPage {
-  // The current song should start empty
   public song;
+  public songs: FirebaseListObservable<any[]>;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private songProvider: SongProvider) {
+              public db: AngularFireDatabase) {
     this.clearForm();
   }
 
   ionViewDidLoad() {
+    let songId;
     // Retrieve the object from navParams if present
     if ( this.navParams.get('song') != null){
-      this.song = this.navParams.get('song');
+      songId = this.navParams.get('song').id;
+      this.songs = this.db.list('/songs');
+      this.song = this.songs.$ref.orderByChild('id').equalTo(songId);
     }
   }
 
-  public saveSong() {
-      this.song.id === null ? this.addSong(this.song) : this.updateSong(this.song);
+  public saveSong(key: string) {
+    this.song.id === null ? this.addSong(this.song) : this.updateSong(key, this.song);
   }
 
   private clearForm(){
     this.song = new Song(null, '', new Date().toISOString(), 0, new Artist(null,''));
   }
 
-  private addSong(song: Song) {
-    this.songProvider.addSong(song).then((song: Song) => {
-      // Empty the inputs and send update
-      this.songProvider.songUpdated.next(this.song);
-      this.clearForm();
-    }).catch((e) => {
-        console.log(JSON.stringify(e))
-    })
+  addSong(song: Song) {
+    return this.songs.push(song);
   }
 
-  private updateSong(song: Song) {
-    this.songProvider.updateSong(song).then((song: Song) => {
-      // Empty the inputs and send update
-      this.songProvider.songUpdated.next(this.song);
-      this.clearForm();
-    }).catch((e) => {
-      console.log(JSON.stringify(e))
-    })
+  updateSong(key: string, song: Song) {
+    return this.songs.update(key, song);
   }
-
 }

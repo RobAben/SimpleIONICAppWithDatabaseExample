@@ -24,10 +24,10 @@
       <ion-col col-1></ion-col>
     </ion-row>
     <!-- Repeated data -->
-    <ion-row *ngFor="let artist of artists">
+    <ion-row *ngFor="let artist of artists | async">
       <ion-col col-10>{{artist.name}}</ion-col>
       <ion-col col-1>
-        <ion-icon color="danger" name="backspace" (click)="removeArtist(artist.id)"></ion-icon>
+        <ion-icon color="danger" name="backspace" (click)="removeArtist(artist.$key)"></ion-icon>
       </ion-col>
       <ion-col col-1>
         <ion-icon name="cog" (click)="goToUpdateArtistPage(artist)"></ion-icon>
